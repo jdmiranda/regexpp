@@ -3,6 +3,7 @@ import { RegExpParser } from "./parser"
 import { RegExpValidator } from "./validator"
 import { RegExpVisitor } from "./visitor"
 
+export { RegExpSyntaxError } from "./regexp-syntax-error"
 export { AST, RegExpParser, RegExpValidator }
 
 /**
