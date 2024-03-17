@@ -419,10 +419,12 @@ class RegExpParserState {
 
         const base = {
             type: "CharacterSet",
+            parent: null,
             start,
             end,
             raw: this.source.slice(start, end),
             kind,
+            strings: null,
             key,
         } as const
 
