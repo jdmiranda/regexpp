@@ -148,12 +148,21 @@ class RegExpParserState {
 
         for (const reference of this._backreferences) {
             const ref = reference.ref
-            const group =
+            const groups =
                 typeof ref === "number"
-                    ? this._capturingGroups[ref - 1]
-                    : this._capturingGroups.find((g) => g.name === ref)!
-            reference.resolved = group
-            group.references.push(reference)
+                    ? [this._capturingGroups[ref - 1]]
+                    : this._capturingGroups.filter((g) => g.name === ref)
+            if (groups.length === 1) {
+                const group = groups[0]
+                reference.ambiguous = false
+                reference.resolved = group
+            } else {
+                reference.ambiguous = true
+                reference.resolved = groups
+            }
+            for (const group of groups) {
+                group.references.push(reference)
+            }
         }
     }
 
@@ -480,6 +489,7 @@ class RegExpParserState {
             end,
             raw: this.source.slice(start, end),
             ref,
+            ambiguous: false,
             resolved: DUMMY_CAPTURING_GROUP,
         }
         parent.elements.push(node)
@@ -747,7 +757,7 @@ export namespace RegExpParser {
         strict?: boolean
 
         /**
-         * ECMAScript version. Default is `2024`.
+         * ECMAScript version. Default is `2025`.
          * - `2015` added `u` and `y` flags.
          * - `2018` added `s` flag, Named Capturing Group, Lookbehind Assertion,
          *   and Unicode Property Escape.
@@ -755,6 +765,7 @@ export namespace RegExpParser {
          * - `2022` added `d` flag.
          * - `2023` added more valid Unicode Property Escapes.
          * - `2024` added `v` flag.
+         * - `2025` added duplicate named capturing groups.
          */
         ecmaVersion?: EcmaVersion
     }

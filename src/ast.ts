@@ -428,10 +428,21 @@ export interface Character extends NodeBase {
  * The backreference.
  * E.g. `\1`, `\k<name>`
  */
-export interface Backreference extends NodeBase {
+export type Backreference = AmbiguousBackreference | UnambiguousBackreference
+interface BaseBackreference extends NodeBase {
     type: "Backreference"
     parent: Alternative | Quantifier
     ref: number | string
+    ambiguous: boolean
+    resolved: CapturingGroup | CapturingGroup[]
+}
+export interface AmbiguousBackreference extends BaseBackreference {
+    ref: string
+    ambiguous: true
+    resolved: CapturingGroup[]
+}
+export interface UnambiguousBackreference extends BaseBackreference {
+    ambiguous: false
     resolved: CapturingGroup
 }
 

@@ -385,6 +385,7 @@
                   "end": 13,
                   "raw": "\\k<a>",
                   "ref": "a",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -466,6 +467,7 @@
                   "end": 13,
                   "raw": "\\k<a>",
                   "ref": "a",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -547,6 +549,7 @@
                   "end": 10,
                   "raw": "\\1",
                   "ref": 1,
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -628,6 +631,7 @@
                   "end": 10,
                   "raw": "\\1",
                   "ref": 1,
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -953,6 +957,7 @@
                   "end": 6,
                   "raw": "\\k<a>",
                   "ref": "a",
+                  "ambiguous": false,
                   "resolved": "♻️../1"
                 },
                 {
@@ -1034,6 +1039,7 @@
                   "end": 6,
                   "raw": "\\k<a>",
                   "ref": "a",
+                  "ambiguous": false,
                   "resolved": "♻️../1"
                 },
                 {
@@ -1115,6 +1121,7 @@
                   "end": 3,
                   "raw": "\\1",
                   "ref": 1,
+                  "ambiguous": false,
                   "resolved": "♻️../1"
                 },
                 {
@@ -1196,6 +1203,7 @@
                   "end": 3,
                   "raw": "\\1",
                   "ref": 1,
+                  "ambiguous": false,
                   "resolved": "♻️../1"
                 },
                 {
@@ -1307,6 +1315,7 @@
                   "end": 19,
                   "raw": "\\k<$abc>",
                   "ref": "$abc",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1388,6 +1397,7 @@
                   "end": 13,
                   "raw": "\\k<あ>",
                   "ref": "あ",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1469,6 +1479,7 @@
                   "end": 22,
                   "raw": "\\k<\\u{20bb7}>",
                   "ref": "𠮷",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1550,6 +1561,7 @@
                   "end": 32,
                   "raw": "\\k<\\u{20bb7}>",
                   "ref": "𠮷",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1631,6 +1643,7 @@
                   "end": 32,
                   "raw": "\\k<\\uD842\\uDFB7>",
                   "ref": "𠮷",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1712,6 +1725,7 @@
                   "end": 32,
                   "raw": "\\k<\\u0061\\u0062\\u0063>",
                   "ref": "abc",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1793,6 +1807,7 @@
                   "end": 32,
                   "raw": "\\k<abc>",
                   "ref": "abc",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1874,6 +1889,7 @@
                   "end": 47,
                   "raw": "\\k<\\u{61}\\u{62}\\u{63}>",
                   "ref": "abc",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
@@ -1955,6 +1971,7 @@
                   "end": 15,
                   "raw": "\\k<a1>",
                   "ref": "a1",
+                  "ambiguous": false,
                   "resolved": "♻️../0"
                 }
               ]
