@@ -24,6 +24,8 @@ import type { EcmaVersion } from "./ecma-versions"
 import { latestEcmaVersion } from "./ecma-versions"
 import { HYPHEN_MINUS } from "./unicode"
 import { RegExpValidator } from "./validator"
+import { globalParseCache } from "./cache"
+import { tryFastPath, shouldCache } from "./fast-paths"
 
 type AppendableNode =
     | Alternative
@@ -881,6 +883,15 @@ export class RegExpParser {
         start = 0,
         end: number = source.length,
     ): RegExpLiteral {
+        // Try cache first
+        const cached = globalParseCache.getCachedLiteral(source, start, end, {
+            strict: this._state.strict,
+            ecmaVersion: this._state.ecmaVersion,
+        })
+        if (cached) {
+            return cached
+        }
+
         this._state.source = source
         this._validator.validateLiteral(source, start, end)
         const pattern = this._state.pattern
@@ -896,6 +907,15 @@ export class RegExpParser {
         }
         pattern.parent = literal
         flags.parent = literal
+
+        // Cache if worth it
+        if (shouldCache(source.slice(start, end))) {
+            globalParseCache.setCachedLiteral(source, start, end, literal, {
+                strict: this._state.strict,
+                ecmaVersion: this._state.ecmaVersion,
+            })
+        }
+
         return literal
     }
 
@@ -911,9 +931,20 @@ export class RegExpParser {
         start = 0,
         end: number = source.length,
     ): Flags {
+        // Try cache first
+        const cached = globalParseCache.getCachedFlags(source, start, end)
+        if (cached) {
+            return cached
+        }
+
         this._state.source = source
         this._validator.validateFlags(source, start, end)
-        return this._state.flags
+        const flags = this._state.flags
+
+        // Cache flags
+        globalParseCache.setCachedFlags(source, start, end, flags)
+
+        return flags
     }
 
     /**
@@ -961,6 +992,33 @@ export class RegExpParser {
               }
             | undefined = undefined,
     ): Pattern {
+        // Normalize flags
+        const flags =
+            typeof uFlagOrFlags === "boolean"
+                ? { unicode: uFlagOrFlags }
+                : uFlagOrFlags
+
+        // Try fast path for simple patterns
+        const fastPath = tryFastPath(source, start, end)
+        if (fastPath) {
+            return fastPath
+        }
+
+        // Try cache
+        const cached = globalParseCache.getCachedPattern(
+            source,
+            start,
+            end,
+            flags,
+            {
+                strict: this._state.strict,
+                ecmaVersion: this._state.ecmaVersion,
+            },
+        )
+        if (cached) {
+            return cached
+        }
+
         this._state.source = source
         this._validator.validatePattern(
             source,
@@ -968,6 +1026,16 @@ export class RegExpParser {
             end,
             uFlagOrFlags as never,
         )
-        return this._state.pattern
+        const pattern = this._state.pattern
+
+        // Cache if worth it
+        if (shouldCache(source.slice(start, end))) {
+            globalParseCache.setCachedPattern(source, start, end, pattern, flags, {
+                strict: this._state.strict,
+                ecmaVersion: this._state.ecmaVersion,
+            })
+        }
+
+        return pattern
     }
 }
