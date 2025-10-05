@@ -5,6 +5,9 @@ import { RegExpVisitor } from "./visitor"
 
 export { RegExpSyntaxError } from "./regexp-syntax-error"
 export { AST, RegExpParser, RegExpValidator }
+export { globalParseCache } from "./cache"
+export { OptimizedRegExpVisitor, createOptimizedVisitor } from "./optimized-visitor"
+export { globalNodePools } from "./node-pool"
 
 /**
  * Parse a given regular expression literal then make AST object.
